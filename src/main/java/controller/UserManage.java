@@ -1,4 +1,4 @@
-package service;
+package controller;
 
 import model.Customer;
 import model.User;
@@ -9,12 +9,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-public class CustomerService {
+public class UserManage {
 
     private UserRepository userRepository = new UserRepository();
     private Scanner scanner = new Scanner(System.in);
 
-    public void register () {
+    public void customerRegister () {
 
         System.out.println("======================");
         System.out.println("Registre-se");
@@ -71,15 +71,15 @@ public class CustomerService {
         System.out.println("Cadastro realizado com sucesso!");
     }
 
-    public void login (String login, String password) {
+    public void customerLogin () {
         System.out.println("======================");
         System.out.println("Login");
         System.out.println("======================");
         System.out.println("Digite seu login:");
-        login = scanner.nextLine();
+        String login = scanner.nextLine();
 
         System.out.println("Digite sua senha:");
-        password = scanner.nextLine();
+        String password = scanner.nextLine();
 
         boolean found = false;
 
@@ -120,7 +120,7 @@ public class CustomerService {
         return users;
     }
 
-    public void update (String name, String newName, String newLogin, String newEmail, String newPassword) {
+    public void updateCustomer () {
         System.out.println("======================");
         System.out.println("Atualizar cadastro");
         System.out.println("======================");
@@ -135,18 +135,18 @@ public class CustomerService {
         }
     }
 
-    public void delete (String name) {
+    public void delete () {
         System.out.println("======================");
         System.out.println("Deletar cadastro");
         System.out.println("======================");
         System.out.println("Digite seu nome:");
-        name = scanner.nextLine();
+        String name = scanner.nextLine();
 
         User userToDelete = userRepository.search(name);
 
         if (userToDelete != null) {
 
-            System.out.println("Usuário Encontrando: ");
+            System.out.println("Usuário Encontrando");
             System.out.println("ID: " + userToDelete.getId());
             System.out.println("Nome: " + userToDelete.getName());
             System.out.println("Login: " + userToDelete.getLogin());

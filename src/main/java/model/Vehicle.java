@@ -38,10 +38,6 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle{" +
-                "plate='" + plate + '\n' +
-                ", model='" + model + '\n' +
-                ", currentLocalization='" + currentLocalization + '\n' +
-                '}';
+        return "\nPlaca : " + getPlate() + ", \nModelo: " + getModel() + ", \nLocalização Atual: " + getCurrentLocalization() + "\n";
     }
 }

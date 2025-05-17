@@ -10,7 +10,6 @@ public class Order {
     private String address;
     private Vehicle vehicle;
 
-
     public Order(Long id, String recipientCPF, String address, String status, Vehicle vehicle) {
         this.id = id;
         this.recipientCPF = recipientCPF;
@@ -57,5 +56,10 @@ public class Order {
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    @Override
+    public String toString(){
+        return "[Id: " + getId()+  " Destinatário: " + getRecipient() +  " Status: " + getStatus()+ " Endereço: " + getAddress() +  " Veículo: " + getVehicle() + "]";
     }
 }

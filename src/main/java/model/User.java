@@ -12,8 +12,8 @@ public abstract class User {
     private LocalDate dateCreation;
     private LocalDate dateUpdate;
 
-
-    public User(Long id, String name, String login, String password, String email, LocalDate dateCreation, LocalDate dateUpdate) {
+    public User(Long id, String name, String login, String password, String email, LocalDate dateCreation,
+            LocalDate dateUpdate) {
         this.id = id;
         this.name = name;
         this.login = login;
@@ -77,5 +77,11 @@ public abstract class User {
 
     public void setDateUpdate(LocalDate dateUpdate) {
         this.dateUpdate = dateUpdate;
+    }
+
+    @Override
+    public String toString() {
+        return "[Id: " + getId() + " Nome: " + getName() + " Login: " + getLogin() + " Senha: " + getPassword() + " Email: "
+                + getEmail() + " Data de Criação: " + getDateCreation() + " Ultima Atualização: " + getDateUpdate() + "]";
     }
 }

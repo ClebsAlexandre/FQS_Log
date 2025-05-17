@@ -8,49 +8,72 @@ import java.util.List;
 
 public class VehicleRepository implements VehicleInterface {
 
-    private List<Vehicle> vehicles = new ArrayList<>();
+    private List<Vehicle> vehiclesList;
 
-    @Override
-    public void create(Vehicle vehicle) {
-        vehicle.setPlate(vehicle.getPlate().trim().toUpperCase());
-        vehicles.add(vehicle);
+    public VehicleRepository() {
+        vehiclesList = new ArrayList<Vehicle>();
     }
 
     @Override
-    public Vehicle search(String plate) {
-        plate = plate.trim().toUpperCase();
-        System.out.println("Buscando veículo com a placa: " + plate);
-        for (Vehicle vehicle : vehicles) {
+    public void create(Vehicle vehicle) {
+        vehiclesList.add(vehicle);
+    }
+
+    @Override
+    public Vehicle searchByPlate(String plate) {
+        Vehicle searchedVehicle = null;
+
+        for (Vehicle vehicle : vehiclesList) {
             if (vehicle.getPlate().equals(plate)) {
-                return vehicle;
+                searchedVehicle = vehicle;
+                return searchedVehicle;
             }
         }
         return null;
+
     }
 
     @Override
     public Vehicle update(String plate, String newPlate, String newModel, String newCurrentLocalization) {
-        Vehicle vehicle = search(plate);
 
-        if (vehicle != null) {
-            vehicle.setPlate(newPlate);
-            vehicle.setModel(newModel);
-            vehicle.setCurrentLocalization(newCurrentLocalization);
-            return vehicle;
-        }
+        Vehicle vehicleToUpdate = searchByPlate(plate);
+
+        if (vehicleToUpdate != null) {
+            if (newPlate != null) {
+                vehicleToUpdate.setPlate(newPlate);
+            }
+
+            if (newModel != null) {
+                vehicleToUpdate.setModel(newModel);
+            }
+
+            if (newCurrentLocalization != null) {
+                vehicleToUpdate.setCurrentLocalization(newCurrentLocalization);
+            }
+
+            return vehicleToUpdate;
+        } 
+        
         return null;
     }
 
     @Override
-    public List<Vehicle> getAllVehicles() {
-        return vehicles;
+    public List<Vehicle> listAllVehicles() {
+        return vehiclesList;
     }
 
     @Override
     public void delete(String plate) {
-        Vehicle vehicle = search(plate);
+        int position = -1;
+
+        Vehicle vehicle = searchByPlate(plate);
         if (vehicle != null) {
-            vehicles.remove(vehicle);
+            position = vehiclesList.indexOf(vehicle);
         }
+
+        if (position != -1) {
+            vehiclesList.remove(position);
+        }
+
     }
 }

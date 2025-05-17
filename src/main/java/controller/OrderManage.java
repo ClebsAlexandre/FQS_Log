@@ -1,4 +1,4 @@
-package service;
+package controller;
 
 import model.Vehicle;
 import repository.OrderRepository;
@@ -7,13 +7,13 @@ import repository.VehicleRepository;
 
 import java.util.Scanner;
 
-public class OrderService {
+public class OrderManage {
 
     private OrderRepository orderRepository = new OrderRepository();
     private VehicleRepository vehicleRepository;
     private Scanner scanner = new Scanner(System.in);
 
-    public OrderService(VehicleRepository vehicleRepository) {
+    public OrderManage(VehicleRepository vehicleRepository) {
         this.vehicleRepository = vehicleRepository;
     }
 
@@ -43,7 +43,7 @@ public class OrderService {
         System.out.println("Digite a placa do veículo:");
         String plate = scanner.nextLine().trim().toUpperCase();
 
-        Vehicle vehicle = vehicleRepository.search(plate);
+        Vehicle vehicle = vehicleRepository.searchByPlate(plate);
 
         if (vehicle == null) {
             System.out.println("Veículo não encontrado.");
@@ -51,22 +51,6 @@ public class OrderService {
         }
 
         System.out.println("Localização: " + vehicle.getCurrentLocalization());
-    }
-
-
-    public void consultOrderById() {
-        System.out.println("======================");
-        System.out.println("Consultar pedido");
-        System.out.println("======================");
-        System.out.println("Digite o ID do pedido:");
-        Long orderId = scanner.nextLong();
-
-        Order order = orderRepository.searchById(orderId);
-        if (order != null) {
-            System.out.println("Pedido encontrado: \n" + order);
-        } else {
-            System.out.println("Pedido não encontrado.");
-        }
     }
 
     public void consultOrderByRecipientCPF() {
@@ -83,4 +67,24 @@ public class OrderService {
             System.out.println("Pedido não encontrado.");
         }
     }
+
+    public void deleteOrder(){
+        System.out.println("======================");
+        System.out.println("Deletar pedido");
+        System.out.println("======================");
+        System.out.println("Digite o ID do pedido:");
+        Long idOrder = scanner.nextLong();
+
+        Order orderToDelete = orderRepository.searchById(idOrder);
+
+        if ( orderToDelete != null) {
+            System.out.println("Pedido Encontrado");
+            System.out.println("ID: " + orderToDelete.getId());
+            System.out.println("Destinatário: " + orderToDelete.getRecipient());
+            System.out.println("Status: " + orderToDelete.getStatus());
+            System.out.println("Endereço: " + orderToDelete.getAddress());
+            System.out.println("Veículo: " + orderToDelete.getVehicle());
+        }
+    }
+
 }
