@@ -79,9 +79,4 @@ public abstract class User {
         this.dateUpdate = dateUpdate;
     }
 
-    @Override
-    public String toString() {
-        return "[Id: " + getId() + " Nome: " + getName() + " Login: " + getLogin() + " Senha: " + getPassword() + " Email: "
-                + getEmail() + " Data de Criação: " + getDateCreation() + " Ultima Atualização: " + getDateUpdate() + "]";
-    }
 }

@@ -52,8 +52,8 @@ public class VehicleRepository implements VehicleInterface {
             }
 
             return vehicleToUpdate;
-        } 
-        
+        }
+
         return null;
     }
 
@@ -66,9 +66,9 @@ public class VehicleRepository implements VehicleInterface {
     public void delete(String plate) {
         int position = -1;
 
-        Vehicle vehicle = searchByPlate(plate);
-        if (vehicle != null) {
-            position = vehiclesList.indexOf(vehicle);
+        Vehicle vehicleToDelete = searchByPlate(plate);
+        if (vehicleToDelete != null) {
+            position = vehiclesList.indexOf(vehicleToDelete);
         }
 
         if (position != -1) {

@@ -3,23 +3,31 @@ package repository;
 import interfaces.UserInterface;
 import model.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements UserInterface {
 
-    private List<User> users = new ArrayList<>();
+    private List<User> usersList;
 
-    @Override
-    public void create(User user) {
-        users.add(user);
+    public UserRepository() {
+        usersList = new ArrayList<User>();
     }
 
     @Override
-    public User search(String name) {
-        for (User user : users) {
+    public void create(User user) {
+        usersList.add(user);
+    }
+
+    @Override
+    public User searchByName(String name) {
+        User searchedUser = null;
+
+        for (User user : usersList) {
             if (user.getName().equals(name)) {
-                return user;
+                searchedUser = user;
+                return searchedUser;
             }
         }
         return null;
@@ -27,30 +35,50 @@ public class UserRepository implements UserInterface {
 
 
     public User update(String name, String newName, String newLogin, String newEmail, String newPassword) {
-        User  user = search(name);
 
-        if(user != null) {
-            user.setName(newName);
-            user.setLogin(newLogin);
-            user.setEmail(newEmail);
-            user.setPassword(newPassword);
-            return user;
+        User userToUpdate = searchByName(name);
+
+        if (userToUpdate != null) {
+            if (newName != null) {
+                userToUpdate.setName(newName);
+            }
+            if (newLogin != null) {
+                userToUpdate.setLogin(newLogin);
+            }
+
+            if (newEmail != null) {
+                userToUpdate.setEmail(newEmail);
+            }
+
+            if (newPassword != null) {
+                userToUpdate.setPassword(newPassword);
+            }
+
+            userToUpdate.setDateUpdate(LocalDate.now());
+            return userToUpdate;
         }
         return null;
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return users;
+    public List<User> listAllUsers() {
+        return usersList;
     }
 
 
     @Override
     public void delete(String name) {
 
-        User user = search(name);
-        if (user != null) {
-            users.remove(user);
+        int position = -1;
+
+        User userToDelete = searchByName(name);
+
+        if (userToDelete != null) {
+            position = usersList.indexOf(userToDelete);
+        }
+
+        if (position != -1) {
+            usersList.remove(position);
         }
     }
 

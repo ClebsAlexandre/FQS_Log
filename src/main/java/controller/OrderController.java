@@ -7,13 +7,13 @@ import repository.VehicleRepository;
 
 import java.util.Scanner;
 
-public class OrderManage {
+public class OrderController {
 
     private OrderRepository orderRepository = new OrderRepository();
     private VehicleRepository vehicleRepository;
     private Scanner scanner = new Scanner(System.in);
 
-    public OrderManage(VehicleRepository vehicleRepository) {
+    public OrderController(VehicleRepository vehicleRepository) {
         this.vehicleRepository = vehicleRepository;
     }
 

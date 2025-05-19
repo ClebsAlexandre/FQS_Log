@@ -60,6 +60,6 @@ public class Order {
 
     @Override
     public String toString(){
-        return "[Id: " + getId()+  " Destinatário: " + getRecipient() +  " Status: " + getStatus()+ " Endereço: " + getAddress() +  " Veículo: " + getVehicle() + "]";
+        return "{ Id: " + getId()+  " | Destinatário: " + getRecipient() +  " | Status: " + getStatus()+ " | Endereço: " + getAddress() +  " | Veículo: " + getVehicle() + " } ";
     }
 }

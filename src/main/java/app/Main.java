@@ -1,30 +1,32 @@
 package app;
 
-import controller.OrderManage;
-import controller.UserManage;
-import controller.VehicleManage;
+import controller.OrderController;
+import controller.UserController;
+import controller.VehicleController;
 import repository.VehicleRepository;
 
 public class Main {
     public static void main(String[] args) {
         VehicleRepository vehicleRepository = new VehicleRepository();
 
-        VehicleManage vehicleManage = new VehicleManage(vehicleRepository);
-        OrderManage orderManage = new OrderManage(vehicleRepository);
-        UserManage userManage = new UserManage();
+        VehicleController vehicleController = new VehicleController(vehicleRepository);
+        OrderController orderController = new OrderController(vehicleRepository);
+        UserController userController = new UserController();
 
-        /*
-         * userManage.customerRegister();
-         * userManage.customerLogin();
-         */
 
-        /* orderManage.createOrder(); */
+        //userController.customerRegister();
+        //userController.customerLogin();
+        //userController.userUpdate();
+        //userController.userDelete();
+        // userController.listAllUsers();
 
-        /*
-         * vehicleManage.createVehicle();
-         * vehicleManage.deleteVehicle();
-         * vehicleManage.vehiclesList();
-         * vehicleManage.updateVehicle();
-         */
+
+        /* orderController.createOrder(); */
+
+
+        //vehicleController.createVehicle();
+        //vehicleController.deleteVehicle();
+        //vehicleController.updateVehicle();
+        //vehicleController.vehiclesList();
     }
 }
