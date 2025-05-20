@@ -9,11 +9,8 @@ import java.util.List;
 
 public class UserRepository implements UserInterface {
 
-    private List<User> usersList;
+    private static List<User> usersList =  new ArrayList<>();
 
-    public UserRepository() {
-        usersList = new ArrayList<User>();
-    }
 
     @Override
     public void create(User user) {

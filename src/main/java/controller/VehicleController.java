@@ -98,16 +98,13 @@ public class VehicleController {
         }
 
         System.out.println(existingVehicle);
-        System.out.println("Tem certeza que deseja remover-lo? (SIM / NÃO)");
+        System.out.println("Tem certeza que deseja remover-lo? (S / N)");
         String option = scanner.nextLine().toUpperCase();
 
         switch (option) {
-            case "SIM":
             case "S":
                 vehicleRepository.delete(searchedVehicle);
                 break;
-            case "NÃO":
-            case "NAO":
             case "N":
                 return;
             default:

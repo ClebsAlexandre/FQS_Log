@@ -8,11 +8,8 @@ import java.util.List;
 
 public class VehicleRepository implements VehicleInterface {
 
-    private List<Vehicle> vehiclesList;
+    private static List<Vehicle> vehiclesList = new  ArrayList<>();
 
-    public VehicleRepository() {
-        vehiclesList = new ArrayList<Vehicle>();
-    }
 
     @Override
     public void create(Vehicle vehicle) {

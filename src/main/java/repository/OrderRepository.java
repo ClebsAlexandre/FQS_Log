@@ -9,18 +9,21 @@ import java.util.List;
 
 public class OrderRepository implements OrderInterface {
 
-    private List<Order> orders = new ArrayList<>();
+    private static List<Order> ordersList = new ArrayList<>();
 
     @Override
     public void create(Order order){
-        orders.add(order);
+        ordersList.add(order);
     }
 
     @Override
     public Order searchById(Long id) {
-        for (Order order : orders) {
+        Order searchedOrder = null;
+
+        for (Order order : ordersList) {
             if (order.getId().equals(id)) {
-                return order;
+                searchedOrder = order;
+                return searchedOrder;
             }
         }
         return null;
@@ -28,25 +31,37 @@ public class OrderRepository implements OrderInterface {
 
     @Override
     public Order searchByRecipientCPF(String recipientCPF) {
-        for (Order order : orders) {
-            String recipient = order.getRecipient();
-            if (recipient != null) {
-                return order;
+        Order searchedOrder = null;
+
+        for (Order order : ordersList) {
+            if (order.getRecipient().equals(recipientCPF)) {
+                searchedOrder = order;
+                return searchedOrder;
             }
         }
         return null;
     }
 
     @Override
-    public List<Order> getAllOrders() {
-        return orders;
+    public List<Order> listAllOrders() {
+        return ordersList;
     }
 
     @Override
     public void delete(Long id) {
-        Order order = searchById(id);
-        if (order != null) {
-            orders.remove(order);
+
+        int position = -1;
+
+        Order orderToDelete = searchById(id);
+
+
+        if (orderToDelete != null) {
+            position = ordersList.indexOf(orderToDelete);
         }
+
+        if (position != -1) {
+            ordersList.remove(position);
+        }
+
     }
 }

@@ -14,6 +14,6 @@ public interface OrderInterface {
 
     Order searchByRecipientCPF(String recipientCPF);
 
-    List<Order> getAllOrders();
+    List<Order> listAllOrders();
 
 }

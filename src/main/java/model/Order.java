@@ -6,11 +6,11 @@ public class Order {
 
     private Long id;
     private String recipientCPF;
-    private String status;
+    private int status;
     private String address;
     private Vehicle vehicle;
 
-    public Order(Long id, String recipientCPF, String address, String status, Vehicle vehicle) {
+    public Order(Long id, String recipientCPF, String address, int status, Vehicle vehicle) {
         this.id = id;
         this.recipientCPF = recipientCPF;
         this.address = address;
@@ -34,11 +34,11 @@ public class Order {
         this.recipientCPF = recipientCPF;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
