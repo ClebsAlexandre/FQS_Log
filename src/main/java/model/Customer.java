@@ -1,5 +1,6 @@
 package model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "TB_CUSTOMER")
 public class Customer extends User {
-
+    @Column(nullable = false, length = 11)
     private String cpf;
 
     public Customer(String name, String login, String password, String email, LocalDate dateCreation, LocalDate dateUpdate, String cpf) {
@@ -17,7 +18,6 @@ public class Customer extends User {
     }
 
     public Customer() {
-        super();
     }
 
 

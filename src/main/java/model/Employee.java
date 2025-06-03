@@ -11,14 +11,15 @@ public class Employee extends User {
     private String badgeNumber;
     private double salary;
 
-    public Employee(String name, String login, String password, String email, LocalDate dateCreation,
-                    LocalDate dateUpdate, String badgeNumber, double salary) {
+    public Employee(String name, String login, String password, String email, LocalDate dateCreation, LocalDate dateUpdate, String badgeNumber, double salary) {
         super(name, login, password, email, dateCreation, dateUpdate);
         this.badgeNumber = badgeNumber;
         this.salary = salary;
     }
 
+    public Employee() {
 
+    }
 
 
     public String getBadgeNumber() {

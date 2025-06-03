@@ -5,12 +5,17 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "TB_VEHICLE")
 public class Vehicle {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    @Column(nullable = false, length = 10, unique = true)
     private String plate;
 
     @Column(nullable = false, length = 20)
