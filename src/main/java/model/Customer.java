@@ -1,14 +1,23 @@
 package model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "TB_CUSTOMER")
 public class Customer extends User {
 
     private String cpf;
 
-    public Customer(Long id, String name, String login, String password, String email, LocalDate dateCreation, LocalDate dateUpdate, String cpf) {
-        super(id, name, login, password, email, dateCreation, dateUpdate);
+    public Customer(String name, String login, String password, String email, LocalDate dateCreation, LocalDate dateUpdate, String cpf) {
+        super(name, login, password, email, dateCreation, dateUpdate);
         this.cpf = cpf;
+    }
+
+    public Customer() {
+        super();
     }
 
 
@@ -22,7 +31,7 @@ public class Customer extends User {
 
     @Override
     public String toString() {
-        return "\n{ Id: " + getId() + " | CPF: " + getCpf() + " | Nome: " + getName() + " | Login: " + getLogin() + " | Senha: " + getPassword() + " | Email: "
+        return "\n{ CPF: " + getCpf() + " | Nome: " + getName() + " | Login: " + getLogin() + " | Senha: " + getPassword() + " | Email: "
                 + getEmail() + " | Data de Criação: " + getDateCreation() + " | Ultima Atualização: " + getDateUpdate() + " } ";
     }
 }

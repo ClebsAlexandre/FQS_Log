@@ -1,16 +1,25 @@
 package model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "TB_EMPLOYEE")
 public class Employee extends User {
     private String badgeNumber;
     private double salary;
 
-    public Employee(Long id, String name, String login, String password, String email, LocalDate dateCreation, LocalDate dateUpdate, String badgeNumber, double salary) {
-        super(id, name, login, password, email, dateCreation, dateUpdate);
-        this.salary = salary;
+    public Employee(String name, String login, String password, String email, LocalDate dateCreation,
+                    LocalDate dateUpdate, String badgeNumber, double salary) {
+        super(name, login, password, email, dateCreation, dateUpdate);
         this.badgeNumber = badgeNumber;
+        this.salary = salary;
     }
+
+
+
 
     public String getBadgeNumber() {
         return badgeNumber;
@@ -30,7 +39,6 @@ public class Employee extends User {
 
     @Override
     public String toString() {
-        return "\n{ Id: " + getId() + " | Matrícula: " + getBadgeNumber() + " | Nome: " + getName() + " | Login: " + getLogin() + " | Senha: " + getPassword() + " | Email: "
-                + getEmail() + " | Data de Criação: " + getDateCreation() + " | Ultima Atualização: " + getDateUpdate() + " | Salário: " + getSalary() + " } ";
+        return "\n{ Matrícula: " + getBadgeNumber() + " | Nome: " + getName() + " | Login: " + getLogin() + " | Senha: " + getPassword() + " | Email: " + getEmail() + " | Data de Criação: " + getDateCreation() + " | Ultima Atualização: " + getDateUpdate() + " | Salário: " + getSalary() + " } ";
     }
 }

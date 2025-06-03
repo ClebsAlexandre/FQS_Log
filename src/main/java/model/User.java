@@ -1,20 +1,35 @@
 package model;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@MappedSuperclass
 public abstract class User {
 
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    @Column(nullable = false, length = 200)
     private String name;
+    @Column(nullable = false, length = 60, unique = true)
     private String login;
+    @Column(nullable = false, length = 50)
     private String password;
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false)
     private LocalDate dateCreation;
+    @Column(nullable = false)
     private LocalDate dateUpdate;
 
-    public User(Long id, String name, String login, String password, String email, LocalDate dateCreation,
+    public User(String name, String login, String password, String email, LocalDate dateCreation,
             LocalDate dateUpdate) {
-        this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;
@@ -23,12 +38,8 @@ public abstract class User {
         this.dateUpdate = dateUpdate;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public User(){
 
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

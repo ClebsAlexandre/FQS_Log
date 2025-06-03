@@ -1,16 +1,40 @@
 package model;
 
-import model.Vehicle;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import org.aspectj.weaver.ast.Or;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.UUID;
+
+@Entity
+@Table(name = "TB_ORDER")
 public class Order {
 
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
+    @Column(nullable = false, unique = true, length = 11)
     private String recipientCPF;
-    private int status;
+
+    @Column(nullable = false, length = 20)
+    private String status;
+
+    @Column(nullable = false, length = 60)
     private String address;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "vehicle_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({"orders"})
     private Vehicle vehicle;
 
-    public Order(Long id, String recipientCPF, String address, int status, Vehicle vehicle) {
+    public Order(){}
+
+    public Order(UUID id, String recipientCPF, String address, String status, Vehicle vehicle) {
         this.id = id;
         this.recipientCPF = recipientCPF;
         this.address = address;
@@ -18,11 +42,12 @@ public class Order {
         this.vehicle = vehicle;
     }
 
-    public Long getId() {
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -34,11 +59,11 @@ public class Order {
         this.recipientCPF = recipientCPF;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

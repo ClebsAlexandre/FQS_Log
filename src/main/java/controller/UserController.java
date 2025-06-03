@@ -61,7 +61,6 @@ public class UserController {
         String badgeNumber = scanner.nextLine();
 
         Employee employee = new Employee(
-                System.currentTimeMillis(),
                 name,
                 login,
                 password,
@@ -75,7 +74,7 @@ public class UserController {
 
     }
 
-    public void customerRegister () {
+    public void customerRegister() {
 
         System.out.println("=================================");
         System.out.println("|\t\t\t\t\t\t\t\t|");
@@ -126,7 +125,6 @@ public class UserController {
         }
 
         Customer customer = new Customer(
-                System.currentTimeMillis(),
                 name,
                 login,
                 password,
