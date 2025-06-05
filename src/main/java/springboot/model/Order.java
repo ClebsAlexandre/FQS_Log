@@ -1,4 +1,4 @@
-package model;
+package springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

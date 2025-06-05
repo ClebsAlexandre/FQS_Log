@@ -1,6 +1,6 @@
-package interfaces;
+package springboot.interfaces;
 
-import model.Order;
+import springboot.model.Order;
 
 import java.util.List;
 

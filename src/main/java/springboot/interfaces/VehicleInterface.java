@@ -1,6 +1,6 @@
-package interfaces;
+package springboot.interfaces;
 
-import model.Vehicle;
+import springboot.model.Vehicle;
 
 import java.util.List;
 

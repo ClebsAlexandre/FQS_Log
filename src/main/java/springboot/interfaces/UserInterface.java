@@ -1,6 +1,6 @@
-package interfaces;
+package springboot.interfaces;
 
-import model.User;
+import springboot.model.User;
 
 import java.util.List;
 
