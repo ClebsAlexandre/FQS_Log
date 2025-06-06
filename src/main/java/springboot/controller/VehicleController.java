@@ -78,7 +78,7 @@ public class VehicleController {
     public ResponseEntity<Object> searchVehicle(@PathVariable(value="plate") String plate) {
         Optional<Vehicle> optionalVehicle = vehicleRepository.findByPlate(plate);
 
-        if(optionalVehicle == null) {
+        if(optionalVehicle.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 

@@ -1,25 +1,24 @@
 package springboot.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
-import java.time.LocalDate;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "TB_CUSTOMER")
+@PrimaryKeyJoinColumn(name = "user_id")
 public class Customer extends User {
-    @Column(nullable = false, length = 11)
+
+    @Column(nullable = false, length = 11, unique = true)
     private String cpf;
 
-    public Customer(String name, String login, String password, String email, LocalDate dateCreation, LocalDate dateUpdate, String cpf) {
-        super(name, login, password, email, dateCreation, dateUpdate);
+
+
+    public Customer(String name, String login, String password, String email, String cpf) {
+        super(name, login, password, email);
         this.cpf = cpf;
     }
 
-    public Customer() {
-    }
 
+    public Customer() {}
 
     public String getCpf() {
         return cpf;
@@ -27,11 +26,5 @@ public class Customer extends User {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    @Override
-    public String toString() {
-        return "\n{ CPF: " + getCpf() + " | Nome: " + getName() + " | Login: " + getLogin() + " | Senha: " + getPassword() + " | Email: "
-                + getEmail() + " | Data de Criação: " + getDateCreation() + " | Ultima Atualização: " + getDateUpdate() + " } ";
     }
 }
