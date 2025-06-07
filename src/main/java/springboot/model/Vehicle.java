@@ -60,8 +60,11 @@ public class Vehicle {
         this.currentLocalization = currentLocalization;
     }
 
-    @Override
-    public String toString() {
-        return "\n{ Placa : " + getPlate() + " | Modelo: " + getModel() + " | Localização Atual: " + getCurrentLocalization() + " } ";
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

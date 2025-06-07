@@ -1,130 +1,88 @@
-//package springboot.springboot.controller;
-//
-//import springboot.springboot.model.Order;
-//import springboot.springboot.model.Vehicle;
-//import springboot.springboot.repository.OrderRepository;
-//import springboot.springboot.repository.VehicleRepository;
-//
-//import java.util.Scanner;
-//
-//public class OrderController {
-//
-//    private OrderRepository orderRepository = new OrderRepository();
-//    private VehicleRepository vehicleRepository;
-//    private Scanner scanner = new Scanner(System.in);
-//
-//    public OrderController(VehicleRepository vehicleRepository) {
-//        this.vehicleRepository = vehicleRepository;
-//    }
-//
-//    public void createOrder() {
-//        System.out.println("=================================");
-//        System.out.println("|\t\t\t\t\t\t\t\t|");
-//        System.out.println("|\t\t  Gerar Pedido  \t\t|");
-//        System.out.println("|\t\t\t\t\t\t\t\t|");
-//        System.out.println("=================================");
-//
-//        System.out.println("Digite o CPF do destinatário:");
-//        String cpf = scanner.nextLine();
-//
-//        if (cpf.length() != 11) {
-//            System.out.println("CPF inválido. O CPF deve ter 11 dígitos.");
-//            return;
-//        }
-//
-//        System.out.println("=================================");
-//        System.out.println("Digite o endereço:");
-//        String address = scanner.nextLine();
-//
-//        System.out.println("=================================");
-//        System.out.println("Selecione o status do pedido:");
-//        System.out.println("1 - Sendo Processado");
-//        System.out.println("2 - Em Transporte");
-//        int status = scanner.nextInt();
-//        scanner.nextLine();
-//
-//        Vehicle vehicle = null;
-//
-//        if (status == 2) {
-//            System.out.println("Digite a placa do veículo:");
-//            String plate = scanner.nextLine().trim().toUpperCase();
-//
-//            vehicle = vehicleRepository.searchByPlate(plate);
-//
-//            if (vehicle == null) {
-//                System.out.println("Veículo não encontrado.");
-//                return;
-//            }
-//
-//            System.out.println("Localização: " + vehicle.getCurrentLocalization());
-//        }
-//        Order order = new Order(System.currentTimeMillis(), cpf, address, status, vehicle);
-//
-//        orderRepository.create(order);
-//    }
-//
-//    public void searchByRecipientCPF() {
-//        System.out.println("=================================");
-//        System.out.println("|\t\t\t\t\t\t\t\t|");
-//        System.out.println("|\t\t  Pesquisar Pedido \t\t|");
-//        System.out.println("|\t\t\t\t\t\t\t\t|");
-//        System.out.println("=================================");
-//        System.out.println("Digite o CPF do destinatário:");
-//        String recipientCPF = scanner.nextLine();
-//
-//        System.out.println("=================================");
-//        Order order = orderRepository.searchByRecipientCPF(recipientCPF);
-//        if (order != null) {
-//            System.out.println("Pedido encontrado: \n" + order);
-//        } else {
-//            System.out.println("Pedido não encontrado.");
-//        }
-//    }
-//
-//    public void deleteOrder(){
-//        System.out.println("=================================");
-//        System.out.println("|\t\t\t\t\t\t\t\t|");
-//        System.out.println("|\t\t  Remover Pedido \t\t|");
-//        System.out.println("|\t\t\t\t\t\t\t\t|");
-//        System.out.println("=================================");
-//        System.out.println("Digite o ID do pedido:");
-//        Long searchedOrder = scanner.nextLong();
-//        scanner.nextLine();
-//
-//        Order existingOrder = orderRepository.searchById(searchedOrder);
-//
-//        System.out.println("=================================");
-//
-//        if (existingOrder == null){
-//            System.out.println("Pedido não encontrado.");
-//            return;
-//        }
-//
-//        System.out.println(existingOrder);
-//        System.out.println("Tem certeza que deseja remover-lo? (S / N)");
-//        String option = scanner.nextLine().toUpperCase();
-//
-//        switch (option) {
-//            case "S":
-//                orderRepository.delete(searchedOrder);
-//                break;
-//            case "N":
-//                return;
-//            default:
-//                System.out.println("Opção Inválida. Tente Novamente.");
-//                break;
-//        }
-//
-//    }
-//
-//    public void orderList(){
-//        System.out.println("=================================");
-//        System.out.println("|\t\t\t\t\t\t\t\t|");
-//        System.out.println("|\t\tLista de Pedidos\t\t|");
-//        System.out.println("|\t\t\t\t\t\t\t\t|");
-//        System.out.println("=================================");
-//
-//        System.out.println(orderRepository.listAllOrders());
-//    }
-//
-//}
+package springboot.controller;
+
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import springboot.dtos.OrderRecordDto;
+import springboot.model.Order;
+import springboot.model.Vehicle;
+import springboot.repository.OrderRepository;
+import springboot.repository.VehicleRepository;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+
+@RestController
+@RequestMapping("/order")
+public class OrderController {
+
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private VehicleRepository vehicleRepository;
+
+
+
+    @PostMapping("/save")
+    public ResponseEntity<?> saveOrder(@RequestBody @Valid OrderRecordDto orderRecordDto) {
+
+        var orderModel = new Order();
+        BeanUtils.copyProperties(orderRecordDto, orderModel);
+
+        String plate = orderRecordDto.vehiclePlate();
+
+        if (plate != null && !plate.isBlank()) {
+            Optional<Vehicle> vehicle = vehicleRepository.findByPlate(plate);
+
+            if (vehicle.isPresent()) {
+                orderModel.setVehicle(vehicle.get());
+            }
+        }
+
+        return ResponseEntity.ok().body(orderRepository.save(orderModel));
+
+    }
+
+    @GetMapping("/search/{recipientCPF}")
+    public ResponseEntity<List<Order>> searchByRecipientCPF(@PathVariable(value = "recipientCPF") String recipientCPF) {
+
+        List<Order> orders = orderRepository.findByRecipientCPF(recipientCPF);
+
+        if (orders.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(orders);
+
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<?> removeOrder(@PathVariable UUID id) {
+        Optional<Order> optionalOrder = orderRepository.findById(id);
+
+        if (optionalOrder.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Order deletedOrder = optionalOrder.get();
+
+        Vehicle vehicle = deletedOrder.getVehicle();
+        if (vehicle != null) {
+            vehicle.getOrders().remove(deletedOrder);
+        }
+
+        orderRepository.delete(deletedOrder);
+        return ResponseEntity.ok().body(deletedOrder);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<Order>> orderList(){
+        List<Order> orders = orderRepository.findAll();
+
+        return ResponseEntity.ok().body(orders);
+    }
+
+}

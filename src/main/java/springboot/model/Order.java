@@ -15,7 +15,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, unique = true, length = 11)
+    @Column(nullable = false, length = 11)
     private String recipientCPF;
 
     @Column(nullable = false, length = 20)
@@ -26,14 +26,12 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicle_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnoreProperties({"orders"})
     private Vehicle vehicle;
 
     public Order(){}
 
-    public Order(UUID id, String recipientCPF, String address, String status, Vehicle vehicle) {
-        this.id = id;
+    public Order(String recipientCPF, String address, String status, Vehicle vehicle) {
         this.recipientCPF = recipientCPF;
         this.address = address;
         this.status = status;
@@ -41,19 +39,11 @@ public class Order {
     }
 
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getRecipient() {
+    public String getRecipientCPF() {
         return recipientCPF;
     }
 
-    public void setRecipient(String recipientCPF) {
+    public void setRecipientCPF(String recipientCPF) {
         this.recipientCPF = recipientCPF;
     }
 
@@ -81,8 +71,4 @@ public class Order {
         this.vehicle = vehicle;
     }
 
-    @Override
-    public String toString(){
-        return "{ Id: " + getId()+  " | Destinatário: " + getRecipient() +  " | Status: " + getStatus()+ " | Endereço: " + getAddress() +  " | Veículo: " + getVehicle() + " } ";
-    }
 }

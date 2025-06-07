@@ -1,7 +1,5 @@
 package springboot.controller;
 
-
-import org.springframework.http.HttpStatus;
 import springboot.dtos.VehicleRecordDto;
 import jakarta.validation.Valid;
 import springboot.model.Vehicle;
@@ -10,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springboot.repository.VehicleRepository;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -58,7 +55,7 @@ public class VehicleController {
         Optional<Vehicle> optionalVehicle = vehicleRepository.findByPlate(plate);
 
         if (optionalVehicle.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Veículo não encontrado");
+            return ResponseEntity.notFound().build();
         }
 
         Vehicle deletedVehicle = optionalVehicle.get();
